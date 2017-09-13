@@ -63,7 +63,7 @@ TEST_CASE("ARGB") {
 
     SECTION("create from another ARGB (verify)") {
         ARGB argb1{0.1f, 0.2f, 0.3f, 0.4f};
-        ARGB argb2{argb2};
+        ARGB argb2{argb1};
 
         argb2.setAlpha(0.5f);
         argb2.setRed(0.6f);

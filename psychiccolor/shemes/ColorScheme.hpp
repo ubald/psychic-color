@@ -8,7 +8,7 @@ namespace psychic_color {
     class ColorScheme {
         static_assert(std::is_base_of<Color, T>::value, "T must extend Color");
 
-        
+
     };
 
 }
