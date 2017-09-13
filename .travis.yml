@@ -16,6 +16,7 @@ branches:
 
 env:
   global:
+    - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
     - CMAKE_VERSION="3.8"
     - CMAKE_VERSION_FULL="3.8.2"
 
