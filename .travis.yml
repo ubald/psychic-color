@@ -1,5 +1,5 @@
 sudo: required
-dist: precise
+dist: trusty
 
 language: generic
 
@@ -13,6 +13,27 @@ os:
 branches:
   only:
     - master
+
+env:
+  global:
+    - CMAKE_VERSION="3.8"
+    - CMAKE_VERSION_FULL="3.8.2"
+
+cache:
+  ccache: true
+  directories:
+    - cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/bin
+    - cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/plugins
+    - cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/share
+
+install:
+- |
+  if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
+    CMAKE_URL="http://www.cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION_FULL}-Linux-x86_64.tar.gz"
+    mkdir -p ${DEPS_DIR}/cmake
+    travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
+    export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+  fi
 
 script:
   - mkdir build
