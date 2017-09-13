@@ -23,9 +23,9 @@ env:
 cache:
   ccache: true
   directories:
-    - cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/bin
-    - cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/plugins
-    - cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/share
+    - ${DEPS_DIR}/cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/bin
+    - ${DEPS_DIR}/cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/plugins
+    - ${DEPS_DIR}/cmake-${CMAKE_VERSION_FULL}-Linux-x86_64/share
 
 install:
 - |

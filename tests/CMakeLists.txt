@@ -3,7 +3,7 @@ add_feature_info("tests" PSYCHIC_COLOR_BUILD_TESTS "Test Suite")
 
 if (PSYCHIC_COLOR_BUILD_TESTS)
     ExternalProject_Add(catchlib
-        GIT_REPOSITORY git@github.com:philsquared/Catch.git
+        GIT_REPOSITORY https://github.com/philsquared/Catch.git
         GIT_TAG master
         INSTALL_COMMAND ""
         )
