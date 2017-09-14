@@ -6,7 +6,6 @@ if (PSYCHIC_COLOR_BUILD_TESTS)
         GIT_REPOSITORY https://github.com/philsquared/Catch.git
         GIT_TAG master
         CMAKE_ARGS "-DNO_SELFTEST=YES"
-        INSTALL_COMMAND ""
     )
 
     set(CATCH_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/psychic-color-catch-prefix/src/catchlib/single_include)

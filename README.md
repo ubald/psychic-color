@@ -9,7 +9,7 @@ A C++ library for color conversion and color scheme generation.
 It is based on [hxColorToolkit](https://github.com/andyli/hxColorToolkit) 
 which in turn was based on [colortoolkit](http://code.google.com/p/colortoolkit/) with lots of bug fixes and enhancements.
 
-## What's with he name?
+## What's with the name?
 
 This is intended to be part of a future larger project so it is named according to that projet's name. I intend to make
 sources available as much as possible for all of the project's parts in the form of libraries like this.
