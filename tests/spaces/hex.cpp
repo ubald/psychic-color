@@ -1,7 +1,7 @@
 #include <cmath>
 #include "catch.hpp"
 #include <iostream>
-#include <psychic_color/spaces/Hex.hpp>
+#include <psychic-color/spaces/Hex.hpp>
 
 using namespace psychic_color;
 

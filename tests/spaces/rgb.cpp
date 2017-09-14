@@ -1,6 +1,6 @@
 #include <cmath>
 #include "catch.hpp"
-#include <psychic_color/spaces/RGB.hpp>
+#include <psychic-color/spaces/RGB.hpp>
 #include <iostream>
 
 using namespace psychic_color;
