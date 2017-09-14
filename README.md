@@ -16,7 +16,7 @@ sources available as much as possible for all of the project's parts in the form
 
 ## Usage
 
-Clone as a submodule and either use `add_subdirectory` in CMake and then add `${PSYCHICUI_INCLUDE_DIRS}` to your include
+Clone as a submodule and either use `add_subdirectory` in CMake and then add `${PSYCHIC_UI_INCLUDE_DIRS}` to your include
 directories, or just copy the headers and source to your project and include them however you want.
 
 ## Color spaces
@@ -31,7 +31,7 @@ They can be found inside the package `spaces`. All of them extend the base class
 * `RGB` Normal 3-channel [RGB](http://en.wikipedia.org/wiki/RGB_color_space) color space with each channel in [0.0f,1.0f]. Unlike `Hex`, its properties(`red`, `green`, `blue`) are stored as `float` for precise calculation.
 * `ARGB` 4-channel ARGB color space with each channel in [0.0f,1.0f]. It is a sub-class of `RGB` with an additional `alpha` value that defaults to 1.0f.
 
-### Not yet ported
+### Not yet ported (Not very useful for GUI work anyway)
 
 * `Lab` 3-channel [Lab](http://en.wikipedia.org/wiki/Lab_color_space) color space with ranges [0,100], [-128,127], [-128,127].
 * `XYZ` 3-channel [XYZ](http://en.wikipedia.org/wiki/CIE_1931_color_space) color space with ranges [0,95.047], [0,100], [0,108.883].

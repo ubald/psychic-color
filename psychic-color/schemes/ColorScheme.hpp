@@ -1,6 +1,6 @@
 #pragma once
 
-#include "psychiccolor/spaces/Color.hpp"
+#include "../spaces/Color.hpp"
 
 namespace psychic_color {
 
