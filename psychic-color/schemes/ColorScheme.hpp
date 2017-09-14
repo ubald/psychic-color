@@ -1,5 +1,6 @@
 #pragma once
 
+#include <type_traits>
 #include "../spaces/Color.hpp"
 
 namespace psychic_color {
