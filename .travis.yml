@@ -5,10 +5,12 @@ language: cpp
 
 os:
   - linux
+  - osx
 
 branches:
   only:
     - master
+    - travis
 
 env:
   global:
@@ -68,9 +70,13 @@ install:
       travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
       export PATH=${DEPS_DIR}/cmake/bin:${PATH}
     fi
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then sudo apt update ; fi
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then sudo apt install libc++-dev ; fi
+
 
 script:
   - mkdir build
   - cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make fi
+  - if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then cmake .. && make fi
   - ./tests/psychic-color-tests
