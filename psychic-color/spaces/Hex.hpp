@@ -11,7 +11,7 @@ namespace psychic_color {
         explicit Hex(unsigned int color = 0);
         Hex(const Hex &hex);
 
-        explicit operator RGB() const override;
+        operator RGB() const override;
 
         unsigned int getAlpha() const;
         void setAlpha(unsigned int alpha);
