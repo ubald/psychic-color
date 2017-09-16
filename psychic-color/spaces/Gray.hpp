@@ -9,18 +9,18 @@ namespace psychic_color {
     class Gray : public Color {
     public:
         inline static float rgbToGray(float red, float green, float blue);
-        Gray(float gray = 0.0f);
+        explicit Gray(float gray = 0.0f);
         Gray(const Gray &gray);
-        Gray(const RGB &rgb);
-        Gray(const unsigned int color);
+        explicit Gray(const RGB &rgb);
+        explicit Gray(unsigned int color);
 
-        operator RGB() const override;
+        explicit operator RGB() const override;
 
         float getGray() const;
-        void setGray(const float gray);
+        void setGray(float gray);
 
-        virtual unsigned int getColor() const override;
-        virtual void setColor(const unsigned int color) override;
+        unsigned int getColor() const override;
+        void setColor(unsigned int color) override;
         //virtual Gray interpolate( Color &target, const float ratio = 0.5f) const override;
 
         friend std::ostream& operator << ( std::ostream& os, const Gray& gray ) {
