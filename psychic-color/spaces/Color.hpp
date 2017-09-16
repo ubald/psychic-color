@@ -7,6 +7,10 @@ namespace psychic_color {
 
     class Color {
     public:
+        Color(const Color &color) {
+            setColor(color.getColor());
+        }
+
         virtual explicit operator RGB() const = 0;
 
         virtual unsigned int getColor() const = 0;
