@@ -22,6 +22,7 @@ if (PSYCHIC_COLOR_BUILD_TESTS)
         spaces/argb.cpp
         spaces/hex.cpp
         spaces/hsb.cpp
+        spaces/hsl.cpp
         schemes/complementary.cpp psychic_color.cpp)
     target_include_directories(psychic-color-tests PUBLIC ${CATCH_INCLUDE_DIRS} ${PSYCHIC_COLOR_INCLUDE_DIRS})
     target_link_libraries(psychic-color-tests psychic-color)

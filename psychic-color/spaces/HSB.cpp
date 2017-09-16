@@ -182,8 +182,7 @@ namespace psychic_color {
     }
 
     unsigned int HSB::getColor() const {
-        RGB rgb{*this};
-        return rgb.getColor();
+        return static_cast<RGB>(*this).getColor();
     }
 
     void HSB::setColor(const unsigned int color) {

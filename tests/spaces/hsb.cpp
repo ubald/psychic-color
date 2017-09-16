@@ -96,7 +96,7 @@ TEST_CASE("HSB") {
 
             SECTION("red") {
                 HSB hsb{1.0f, 1.0f, 1.0f};
-                RGB rgb{hsb};
+                RGB rgb{static_cast<RGB>(hsb)};
                 REQUIRE(rgb.getRed() == 1.0f);
                 REQUIRE(rgb.getGreen() == 0.0f);
                 REQUIRE(rgb.getBlue() == 0.0f);
@@ -104,7 +104,7 @@ TEST_CASE("HSB") {
 
             SECTION("green") {
                 HSB hsb{1.0f / 3.0f, 1.0f, 1.0f};
-                RGB rgb{hsb};
+                RGB rgb{static_cast<RGB>(hsb)};
                 REQUIRE(rgb.getRed() == 0.0f);
                 REQUIRE(rgb.getGreen() == 1.0f);
                 REQUIRE(rgb.getBlue() == 0.0f);
@@ -112,7 +112,7 @@ TEST_CASE("HSB") {
 
             SECTION("blue") {
                 HSB hsb{2.0f / 3.0f, 1.0f, 1.0f};
-                RGB rgb{hsb};
+                RGB rgb{static_cast<RGB>(hsb)};
                 REQUIRE(rgb.getRed() == 0.0f);
                 REQUIRE(rgb.getGreen() == 0.0f);
                 REQUIRE(rgb.getBlue() == 1.0f);

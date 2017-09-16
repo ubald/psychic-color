@@ -21,6 +21,10 @@ namespace psychic_color {
         void setHue(float hue);
         void shiftHue(float hue);
 
+        float getHueAngle() const;
+        void setHueAngle(float hue);
+        void shiftHueAngle(float hue);
+
         float getSaturation() const;
         void setSaturation(float saturation);
         void saturate(float saturation);
