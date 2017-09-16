@@ -11,7 +11,7 @@ namespace psychic_color {
         RGB(const RGB &rgb);
         RGB(unsigned int color);
 
-        operator RGB() const override;
+        explicit operator RGB() const override;
 
         float getRed() const;
         void setRed(float red);

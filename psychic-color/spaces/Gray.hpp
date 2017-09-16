@@ -14,7 +14,7 @@ namespace psychic_color {
         explicit Gray(const RGB &rgb);
         explicit Gray(unsigned int color);
 
-        operator RGB() const override;
+        explicit operator RGB() const override;
 
         float getGray() const;
         void setGray(float gray);

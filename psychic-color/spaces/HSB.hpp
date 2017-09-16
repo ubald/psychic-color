@@ -13,7 +13,7 @@ namespace psychic_color {
         explicit HSB(const RGB &rgb);
         explicit HSB(unsigned int color);
 
-        operator RGB() const override;
+        explicit operator RGB() const override;
 
         float getHue() const;
         void setHue(float hue);

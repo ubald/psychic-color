@@ -12,7 +12,7 @@ namespace psychic_color {
         explicit ARGB(const RGB &rgb);
         explicit ARGB(unsigned int color);
 
-        operator RGB() const override;
+        explicit operator RGB() const override;
 
         float getAlpha() const;
         void setAlpha(float alpha);
@@ -21,8 +21,17 @@ namespace psychic_color {
         void setColor(unsigned int color) override;
         //virtual RGB interpolate( Color &target, const float ratio = 0.5f) const override;
 
-        friend std::ostream& operator << ( std::ostream& os, const ARGB& argb ) {
-            os << "ARGB(alpha: " << argb.getAlpha() << ", red: " << argb.getRed() << ", green: " << argb.getGreen() << ", blue: " << argb.getBlue() << ")";
+        friend std::ostream &operator<<(std::ostream &os, const ARGB &argb) {
+            os
+                << "ARGB(alpha: "
+                << argb.getAlpha()
+                << ", red: "
+                << argb.getRed()
+                << ", green: "
+                << argb.getGreen()
+                << ", blue: "
+                << argb.getBlue()
+                << ")";
             return os;
         }
 
