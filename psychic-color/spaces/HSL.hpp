@@ -12,8 +12,8 @@ namespace psychic_color {
 
         HSL(const float hue = 0.0f, const float saturation = 0.0f, const float lightness = 0.0f);
         HSL(const HSL &hsl);
-        HSL(const RGB &rgb);
-        HSL(const unsigned int color);
+        explicit HSL(const RGB &rgb);
+        explicit HSL(const unsigned int color);
 
         operator RGB() const override;
 

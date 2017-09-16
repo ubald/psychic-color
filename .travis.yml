@@ -3,10 +3,6 @@ dist: trusty
 
 language: cpp
 
-os:
-  - linux
-  - osx
-
 branches:
   only:
     - master
@@ -27,40 +23,42 @@ cache:
 
 matrix:
   include:
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-4.9
-      env: COMPILER=g++-4.9
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-      env: COMPILER=g++-5
-    - compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-3.9
-          packages:
-            - clang-3.9
-      env: COMPILER=clang++-3.9
-    - compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-4.0
-          packages:
-            - clang-4.0
-      env: COMPILER=clang++-4.0
+    - os: osx
+    - os: linux
+      - compiler: gcc
+        addons:
+          apt:
+            sources:
+              - ubuntu-toolchain-r-test
+            packages:
+              - g++-4.9
+        env: COMPILER=g++-4.9
+      - compiler: gcc
+        addons:
+          apt:
+            sources:
+              - ubuntu-toolchain-r-test
+            packages:
+              - g++-5
+        env: COMPILER=g++-5
+      - compiler: clang
+        addons:
+          apt:
+            sources:
+              - ubuntu-toolchain-r-test
+              - llvm-toolchain-trusty-3.9
+            packages:
+              - clang-3.9
+        env: COMPILER=clang++-3.9
+      - compiler: clang
+        addons:
+          apt:
+            sources:
+              - ubuntu-toolchain-r-test
+              - llvm-toolchain-trusty-4.0
+            packages:
+              - clang-4.0
+        env: COMPILER=clang++-4.0
 
 install:
   - |
