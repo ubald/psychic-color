@@ -32,9 +32,9 @@ namespace psychic_color {
         HSB c2{PsychicColor::rybRotate(primary, 210.0f)};
         c2.brighten(0.1f);
 
-        _colors[0] = std::move(primary);
-        _colors[1] = std::move(c1);
-        _colors[2] = std::move(c2);
+        _colors[0] = std::move(static_cast<T>(primary));
+        _colors[1] = std::move(static_cast<T>(c1));
+        _colors[2] = std::move(static_cast<T>(c2));
     }
 
 }

@@ -81,9 +81,9 @@ namespace psychic_color {
             c2.darken(0.1f);
         }
 
-        _colors[0] = std::move(primary);
-        _colors[1] = std::move(c1);
-        _colors[2] = std::move(c2);
+        _colors[0] = std::move(static_cast<T>(primary));
+        _colors[1] = std::move(static_cast<T>(c1));
+        _colors[2] = std::move(static_cast<T>(c2));
     }
 
 }

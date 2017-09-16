@@ -17,7 +17,7 @@ namespace psychic_color {
         _hue(hue), _saturation(saturation), _lightness(lightness) {}
 
     HSL::HSL(const HSL &hsl) :
-        HSL(hsl._hue, hsl._saturation, hsl._saturation) {}
+        HSL(hsl._hue, hsl._saturation, hsl._lightness) {}
 
     HSL::HSL(const unsigned int color) :
         HSL() {
@@ -96,6 +96,18 @@ namespace psychic_color {
         setHue(_hue + hue);
     }
 
+    float HSL::getHueAngle() const {
+        return _hue * 360.0f;
+    }
+
+    void HSL::setHueAngle(const float hue) {
+        setHue(hue / 360.0f);
+    }
+
+    void HSL::shiftHueAngle(const float hue) {
+        setHue(_hue + (hue / 360.0f));
+    }
+
     float HSL::getSaturation() const {
         return _saturation;
     }
@@ -129,8 +141,7 @@ namespace psychic_color {
     }
 
     unsigned int HSL::getColor() const {
-        RGB rgb = *this;
-        return rgb.getColor();
+        return static_cast<RGB>(*this).getColor();
     }
 
     void HSL::setColor(const unsigned int color) {

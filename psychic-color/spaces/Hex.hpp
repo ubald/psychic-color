@@ -4,25 +4,26 @@
 #include "Color.hpp"
 
 namespace psychic_color {
+    class RGB;
 
     class Hex : public Color {
     public:
-        Hex(const unsigned int color = 0);
+        explicit Hex(unsigned int color = 0);
         Hex(const Hex &hex);
 
-        operator RGB() const override;
+        explicit operator RGB() const override;
 
         unsigned int getAlpha() const;
-        void setAlpha(const unsigned int  alpha);
+        void setAlpha(unsigned int alpha);
         unsigned int  getRed() const;
-        void setRed(const unsigned int  red);
+        void setRed(unsigned int  red);
         unsigned int  getGreen() const;
-        void setGreen(const unsigned int  green);
+        void setGreen(unsigned int green);
         unsigned int  getBlue() const;
-        void setBlue(const unsigned int  blue);
+        void setBlue(unsigned int blue);
 
-        virtual unsigned int getColor() const override;
-        virtual void setColor(const unsigned int color) override;
+        unsigned int getColor() const override;
+        void setColor(unsigned int color) override;
         //virtual RGB interpolate( Color &target, const float ratio = 0.5f) const override;
 
         friend std::ostream& operator << ( std::ostream& os, const Hex& hex ) {

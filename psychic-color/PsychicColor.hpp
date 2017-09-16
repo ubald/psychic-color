@@ -278,7 +278,8 @@ namespace psychic_color {
 //            return hsb;
 //        }
 
-        static HSB rybRotate(const Color &color, float angle) {
+        template<class T>
+        static HSB rybRotate(const T &color, float angle) {
             HSB hsb{color};
             return rybRotate(std::move(hsb), angle);
         }

@@ -7,22 +7,31 @@ namespace psychic_color {
 
     class ARGB : public RGB {
     public:
-        ARGB(const float alpha = 0.0f, const float red = 0.0f, const float green = 0.0f, const float blue = 0.0f);
+        explicit ARGB(float alpha = 0.0f, float red = 0.0f, float green = 0.0f, float blue = 0.0f);
         ARGB(const ARGB &argb);
-        ARGB(const RGB &rgb);
-        ARGB(const unsigned int color);
+        explicit ARGB(const RGB &rgb);
+        explicit ARGB(unsigned int color);
 
-        operator RGB() const override;
+        explicit operator RGB() const override;
 
         float getAlpha() const;
-        void setAlpha(const float alpha);
+        void setAlpha(float alpha);
 
-        virtual unsigned int getColor() const override;
-        virtual void setColor(const unsigned int color) override;
+        unsigned int getColor() const override;
+        void setColor(unsigned int color) override;
         //virtual RGB interpolate( Color &target, const float ratio = 0.5f) const override;
 
-        friend std::ostream& operator << ( std::ostream& os, const ARGB& argb ) {
-            os << "ARGB(alpha: " << argb.getAlpha() << ", red: " << argb.getRed() << ", green: " << argb.getGreen() << ", blue: " << argb.getBlue() << ")";
+        friend std::ostream &operator<<(std::ostream &os, const ARGB &argb) {
+            os
+                << "ARGB(alpha: "
+                << argb.getAlpha()
+                << ", red: "
+                << argb.getRed()
+                << ", green: "
+                << argb.getGreen()
+                << ", blue: "
+                << argb.getBlue()
+                << ")";
             return os;
         }
 

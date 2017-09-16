@@ -44,12 +44,12 @@ namespace psychic_color {
         c5.setBrightness(wrap(primary.getBrightness(), 0.40f, 0.20f, 0.40f));
         c5.setSaturation(wrap(primary.getSaturation(), 0.10f, 0.80f, 0.10f));
 
-        _colors[0] = std::move(primary);
-        _colors[1] = std::move(c1);
-        _colors[2] = std::move(c2);
-        _colors[3] = std::move(c3);
-        _colors[4] = std::move(c4);
-        _colors[5] = std::move(c5);
+        _colors[0] = std::move(static_cast<T>(primary));
+        _colors[1] = std::move(static_cast<T>(c1));
+        _colors[2] = std::move(static_cast<T>(c2));
+        _colors[3] = std::move(static_cast<T>(c3));
+        _colors[4] = std::move(static_cast<T>(c4));
+        _colors[5] = std::move(static_cast<T>(c5));
     }
 
 }
