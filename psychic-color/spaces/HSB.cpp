@@ -8,7 +8,7 @@ namespace psychic_color {
         _hue(hue), _saturation(saturation), _brightness(brightness) {}
 
     HSB::HSB(const HSB &hsb) :
-        HSB(hsb._hue, hsb._saturation, hsb._saturation) {}
+        HSB(hsb._hue, hsb._saturation, hsb._brightness) {}
 
     HSB::HSB(const unsigned int color) :
         HSB() {
@@ -137,6 +137,18 @@ namespace psychic_color {
         setHue(_hue + hue);
     }
 
+    float HSB::getHueAngle() const {
+        return _hue * 360.0f;
+    }
+
+    void HSB::setHueAngle(const float hue) {
+        setHue(hue / 360.0f);
+    }
+
+    void HSB::shiftHueAngle(const float hue) {
+        setHue(_hue + (hue / 360.0f));
+    }
+
     float HSB::getSaturation() const {
         return _saturation;
     }
@@ -177,7 +189,7 @@ namespace psychic_color {
     void HSB::setColor(const unsigned int color) {
         // TODO: This is fat from ideal
         HSB hsb{RGB(color)};
-        _hue = hsb.getHue();
+        _hue        = hsb.getHue();
         _saturation = hsb.getSaturation();
         _brightness = hsb.getBrightness();
     }

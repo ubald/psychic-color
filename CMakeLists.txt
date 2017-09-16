@@ -8,14 +8,14 @@ include(ExternalProject)
 include(FeatureSummary)
 
 set(PSYCHIC_COLOR_SOURCES
+    psychic-color/PsychicColor.cpp
     psychic-color/spaces/Gray.cpp
     psychic-color/spaces/Hex.cpp
     psychic-color/spaces/RGB.cpp
     psychic-color/spaces/ARGB.cpp
     psychic-color/spaces/HSB.cpp
     psychic-color/spaces/HSL.cpp
-    psychic-color/schemes/Analogous.cpp
-    psychic-color/schemes/Analogous.hpp)
+)
 
 add_library(psychic-color STATIC
     ${PSYCHIC_COLOR_SOURCES}

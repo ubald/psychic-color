@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "Color.hpp"
 
 namespace psychic_color {
@@ -7,31 +8,40 @@ namespace psychic_color {
 
     class HSB: public Color {
     public:
-        HSB(const float hue = 0.0f, const float saturation = 0.0f, const float brightness = 0.0f);
+        explicit HSB( float hue = 0.0f, float saturation = 0.0f, float brightness = 0.0f);
         HSB(const HSB &hsb);
-        HSB(const RGB &rgb);
-        HSB(const unsigned int color);
+        explicit HSB(const RGB &rgb);
+        explicit HSB( unsigned int color);
 
         operator RGB() const override;
 
         float getHue() const;
-        void setHue(const float hue);
-        void shiftHue(const float hue);
+        void setHue( float hue);
+        void shiftHue( float hue);
+
+        float getHueAngle() const;
+        void setHueAngle( float hue);
+        void shiftHueAngle( float hue);
 
         float getSaturation() const;
-        void setSaturation(const float saturation);
-        void saturate(const float saturation);
-        void desaturate(const float saturation);
+        void setSaturation( float saturation);
+        void saturate( float saturation);
+        void desaturate( float saturation);
 
 
         float getBrightness() const;
-        void setBrightness(const float brightness);
-        void brighten(const float brightness);
-        void darken(const float brightness);
+        void setBrightness( float brightness);
+        void brighten( float brightness);
+        void darken( float brightness);
 
         virtual unsigned int getColor() const override;
-        virtual void setColor(const unsigned int color) override;
+        virtual void setColor( unsigned int color) override;
         //virtual RGB interpolate( Color &target, const float ratio = 0.5f) const override;
+
+        friend std::ostream& operator << ( std::ostream& os, const HSB& hsb ) {
+            os << "HSB(hue: " << hsb.getHue() << ", saturation: " << hsb.getSaturation() << ", brightness: " << hsb.getBrightness() << ")";
+            return os;
+        }
 
     private:
         float _hue{0.0f};

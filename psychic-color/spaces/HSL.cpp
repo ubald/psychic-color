@@ -4,11 +4,11 @@
 namespace psychic_color {
 
     inline float HSL::hue2rgb(const float p, const float q, float t) {
-        if (t < 0) { t += 1; }
-        if (t > 1) { t -= 1; }
-        if (t < 1 / 6) { return p + (q - p) * 6 * t; }
-        if (t < 1 / 2) { return q; }
-        if (t < 2 / 3) { return p + (q - p) * (2 / 3 - t) * 6; }
+        if (t < 0.0f) { t += 1.0f; }
+        if (t > 1.0f) { t -= 1.0f; }
+        if (t < 1.0f / 6.0f) { return p + (q - p) * 6.0f * t; }
+        if (t < 1.0f / 2.0f) { return q; }
+        if (t < 2.0f / 3.0f) { return p + (q - p) * (2.0f / 3.0f - t) * 6.0f; }
         return p;
     }
 
@@ -30,8 +30,8 @@ namespace psychic_color {
         float g = rgb.getGreen();
         float b = rgb.getBlue();
 
-        float max = std::fmax(r, std::fmax(g, b));
-        float min = std::fmin(r, std::fmin(g, b));
+        float max = std::max(r, std::max(g, b));
+        float min = std::min(r, std::min(g, b));
         float h, s, l;
 
         h = s = l = (max + min) / 2.0f;
@@ -42,13 +42,13 @@ namespace psychic_color {
             float d = max - min;
             s = l > 0.5f ? d / (2.0f - max - min) : d / (max + min);
             if (max == r) {
-                h = (g - b) / d + (g < b ? 6 : 0);
+                h = (g - b) / d + (g < b ? 6.0f : 0.0f);
             } else if (max == g) {
-                h = (b - r) / d + 2;
+                h = (b - r) / d + 2.0f;
             } else { //if (maxe == b)
-                h = (r - g) / d + 4;
+                h = (r - g) / d + 4.0f;
             }
-            h /= 6;
+            h /= 6.0f;
         }
 
         _hue        = h;

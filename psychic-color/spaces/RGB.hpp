@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "Color.hpp"
 
 namespace psychic_color {
@@ -22,6 +23,11 @@ namespace psychic_color {
         virtual unsigned int getColor() const override;
         virtual void setColor(const unsigned int color) override;
         //virtual RGB interpolate( Color &target, const float ratio = 0.5f) const override;
+
+        friend std::ostream& operator << ( std::ostream& os, const RGB& rgb ) {
+            os << "RGB(red: " << rgb.getRed() << ", green: " << rgb.getGreen() << ", blue: " << rgb.getBlue() << ")";
+            return os;
+        }
 
     protected:
         float _red{0.0f};

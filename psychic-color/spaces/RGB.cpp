@@ -1,3 +1,4 @@
+#include <iostream>
 #include "RGB.hpp"
 #include "ARGB.hpp"
 
@@ -62,5 +63,6 @@ namespace psychic_color {
     //    t.setBlue(_blue + static_cast<float>(static_cast<float>((t.getBlue() - _blue)) * ratio));
     //    return t;
     //}
+
 
 }

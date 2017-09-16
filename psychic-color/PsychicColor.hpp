@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cmath>
 #include "spaces/Gray.hpp"
 #include "spaces/HSB.hpp"
 #include "spaces/HSL.hpp"
@@ -9,67 +10,70 @@
 #include "spaces/Hex.hpp"
 
 namespace psychic_color {
-    class ColorToolkit {
+
+    class PsychicColor {
 
     private:
-        static constexpr std::array<std::pair<unsigned int, unsigned int>, 25> rybWheel{{
-                                                                                            {0, 0},
-                                                                                            {15, 8},
-                                                                                            {30, 17},
-                                                                                            {45, 26},
-                                                                                            {60, 34},
-                                                                                            {75, 41},
-                                                                                            {90, 48},
-                                                                                            {105, 54},
-                                                                                            {120, 60},
-                                                                                            {135, 81},
-                                                                                            {150, 103},
-                                                                                            {165, 123},
-                                                                                            {180, 138},
-                                                                                            {195, 155},
-                                                                                            {210, 171},
-                                                                                            {225, 187},
-                                                                                            {240, 204},
-                                                                                            {255, 219},
-                                                                                            {270, 234},
-                                                                                            {285, 251},
-                                                                                            {300, 267},
-                                                                                            {315, 282},
-                                                                                            {330, 298},
-                                                                                            {345, 329},
-                                                                                            {360, 0}
-                                                                                        }};
+        static constexpr std::array<std::pair<float, float>, 25> rybWheel{
+            {
+                {0.f / 360.f, 0.f / 360.f},
+                {15.f / 360.f, 8.f / 360.f},
+                {30.f / 360.f, 17.f / 360.f},
+                {45.f / 360.f, 26.f / 360.f},
+                {60.f / 360.f, 34.f / 360.f},
+                {75.f / 360.f, 41.f / 360.f},
+                {90.f / 360.f, 48.f / 360.f},
+                {105.f / 360.f, 54.f / 360.f},
+                {120.f / 360.f, 60.f / 360.f},
+                {135.f / 360.f, 81.f / 360.f},
+                {150.f / 360.f, 103.f / 360.f},
+                {165.f / 360.f, 123.f / 360.f},
+                {180.f / 360.f, 138.f / 360.f},
+                {195.f / 360.f, 155.f / 360.f},
+                {210.f / 360.f, 171.f / 360.f},
+                {225.f / 360.f, 187.f / 360.f},
+                {240.f / 360.f, 204.f / 360.f},
+                {255.f / 360.f, 219.f / 360.f},
+                {270.f / 360.f, 234.f / 360.f},
+                {285.f / 360.f, 251.f / 360.f},
+                {300.f / 360.f, 267.f / 360.f},
+                {315.f / 360.f, 282.f / 360.f},
+                {330.f / 360.f, 298.f / 360.f},
+                {345.f / 360.f, 329.f / 360.f},
+                {360.f / 360.f, 0.f / 360.f}
+            }
+        };
 
     public:
-        inline static constexpr unsigned int setColorOpaque(const unsigned int color, const unsigned int opaqueValue = 0xff) noexcept {
+        inline static constexpr unsigned int setColorAlpha(const unsigned int color, const unsigned int opaqueValue = 0xff) noexcept {
             return (opaqueValue << 24) | (color & 0xffffff);
         }
 
-        inline static unsigned int desaturate(const unsigned int color) {
-            return Gray{color}.getColor();
-        }
-
-        inline static unsigned int getComplement(const unsigned int color) {
-            return rybRotate(color, 180);
-        }
-
-        static unsigned int shiftBrighteness(const unsigned int color, const float degree) {
-            HSB col{color};
-            col.brighten(degree);
-            return col.getColor();
-        }
-
-        static unsigned int shiftSaturation(const unsigned int color, const float degree) {
-            HSB col{color};
-            col.saturate(degree);
-            return col.getColor();
-        }
-
-        static unsigned int shiftHue(const unsigned int color, const float degree) {
-            HSB col{color};
-            col.shiftHue(degree);
-            return col.getColor();
-        }
+        //inline static unsigned int desaturate(const unsigned int color) {
+        //    return Gray{color}.getColor();
+        //}
+        //
+        //inline static unsigned int getComplement(const unsigned int color) {
+        //    return rybRotate(color, 180);
+        //}
+        //
+        //static unsigned int shiftBrighteness(const unsigned int color, const float degree) {
+        //    HSB col{color};
+        //    col.brighten(degree);
+        //    return col.getColor();
+        //}
+        //
+        //static unsigned int shiftSaturation(const unsigned int color, const float degree) {
+        //    HSB col{color};
+        //    col.saturate(degree);
+        //    return col.getColor();
+        //}
+        //
+        //static unsigned int shiftHue(const unsigned int color, const float degree) {
+        //    HSB col{color};
+        //    col.shiftHue(degree);
+        //    return col.getColor();
+        //}
 
         //inline static Lab toLab(const unsigned int color) {
         //    return Lab{color};
@@ -187,48 +191,97 @@ namespace psychic_color {
         //inline static Triad <Hex> getTriadScheme(unsigned intcolor, ?angle:Float = 120) {
         //        return new Triad<Hex>(new Hex(color), angle);
         //}
+
+        inline static constexpr float mapRange(float value, float fromLower, float fromUpper, float toLower, float toUpper) {
+            return (toLower + (value - fromLower) * ((toUpper - toLower) / (fromUpper - fromLower)));
+        };
+
+        // These two functions are ripped straight from Kuler source.
+        // They convert between scientific hue to the color wheel's "artistic" hue.
+        static float artisticToScientificSmooth(float hue) {
+            hue = std::fmod(hue, 360.0f);
+            return (
+                hue < 60.0f ? hue * (35.0f / 60.0f) :
+                hue < 122.0f ? mapRange(hue, 60.0f, 122.0f, 35.0f, 60.0f) :
+                hue < 165.0f ? mapRange(hue, 122.0f, 165.0f, 60.0f, 120.0f) :
+                hue < 218.0f ? mapRange(hue, 165.0f, 218.0f, 120.0f, 180.0f) :
+                hue < 275.0f ? mapRange(hue, 218.0f, 275.0f, 180.0f, 240.0f) :
+                hue < 330.0f ? mapRange(hue, 275.0f, 330.0f, 240.0f, 300.0f) :
+                mapRange(hue, 330.0f, 360.0f, 300.0f, 360.0f)
+            );
+        };
+
+        static float scientificToArtisticSmooth(float hue) {
+            hue = std::fmod(hue, 360.0f);
+            return (
+                hue < 35.0f ? hue * (60.0f / 35.0f) :
+                hue < 60.0f ? mapRange(hue, 35.0f, 60.0f, 60.0f, 122.0f) :
+                hue < 120.0f ? mapRange(hue, 60.0f, 120.0f, 122.0f, 165.0f) :
+                hue < 180.0f ? mapRange(hue, 120.0f, 180.0f, 165.0f, 218.0f) :
+                hue < 240.0f ? mapRange(hue, 180.0f, 240.0f, 218.0f, 275.0f) :
+                hue < 300.0f ? mapRange(hue, 240.0f, 300.0f, 275.0f, 330.0f) :
+                mapRange(hue, 300.0f, 360.0f, 330.0f, 360.0f)
+            );
+        };
+
+        static HSB rybRotate(HSB hsb, float angle) {
+            hsb.setHueAngle(artisticToScientificSmooth(scientificToArtisticSmooth(hsb.getHueAngle()) + angle));
+            return hsb;
+        }
+
 //
+//        static HSB rybRotate(HSB hsb, float angle) {
+//            float a = 0.0f;
 //
-//    static rybRotate(unsigned int color, angle:Float)unsigned int 
-//    {
-//        var hsb:HSB = new HSB().setColor(color);
-//
-//        var a: Float = 0;
-//        for (i in 0...rybWheel.length) {
-//            var x0: Int = rybWheel[i][0];
-//            var y0: Int = rybWheel[i][1];
-//
-//            var x1: Int = rybWheel[i + 1][0];
-//            var y1: Int = rybWheel[i + 1][1];
-//            if(y1 < y0)  y1 += 360;
-//            if(y0 <= hsb.hue && hsb.hue <= y1) {
-//                a = 1.0 * x0 + (x1 - x0) * (hsb.hue - y0) / (y1 - y0);
-//                break;
+//            for (unsigned int i = 0; i < rybWheel.size() - 1; ++i) {
+//                float x0 = rybWheel[i].first;
+//                float y0 = rybWheel[i].second;
+//                float x1 = rybWheel[i + 1].first;
+//                float y1 = rybWheel[i + 1].second;
+//                if (y1 < y0) {
+//                    y1 += 1.0f;
+//                }
+//                if (y0 <= hsb.getHue() && hsb.getHue() <= y1) {
+//                    a = 1.0f * x0 + (x1 - x0) * (hsb.getHue() - y0) / (y1 - y0);
+//                    break;
+//                }
 //            }
-//        }
 //
-//        a = (a + (angle % 360));
-//        if (a < 0)  a = 360 + a;
-//        if (a > 360)  a = a - 360;
-//        a = a % 360;
-//
-//        var newHue:Float = 0;
-//        for (k in 0...rybWheel.length) {
-//            var xx0: Int = rybWheel[k][0];
-//            var yy0: Int = rybWheel[k][1];
-//
-//            var xx1: Int = rybWheel[k + 1][0];
-//            var yy1: Int = rybWheel[k + 1][1];
-//            if (yy1 < yy0) yy1 += 360;
-//            if (xx0 <= a && a <= xx1) {
-//                newHue = yy0 + (yy1 - yy0) * (a - xx0) / (xx1 - xx0);
-//                break;
+//            a = (a + (std::fmod(angle, 1.0f)));
+//            if (a < 0) {
+//                a = 1.0f + a;
 //            }
-//        }
-//        hsb.hue = newHue;
+//            if (a > 1.0f) {
+//                a = a - 1.0f;
+//            }
+//            a = std::fmod(a, 1.0f);
+//            std::cout << a << std::endl;
 //
-//        return hsb.getColor();
-//    }
+//            float newHue = 0.0f;
+//
+//            for (unsigned int i = 0; i < rybWheel.size() - 1; ++i) {
+//                float x0 = rybWheel[i].first;
+//                float y0 = rybWheel[i].second;
+//                float x1 = rybWheel[i + 1].first;
+//                float y1 = rybWheel[i + 1].second;
+//                if (y1 < y0) {
+//                    y1 += 1.0f;
+//                }
+//                if (x0 <= a && a <= x1) {
+//                    newHue = y0 + (y1 - y0) * (a - x0) / (x1 - x0);
+//                    break;
+//                }
+//            }
+//
+//            hsb.setHue(newHue);
+//
+//            return hsb;
+//        }
+
+        static HSB rybRotate(const Color &color, float angle) {
+            HSB hsb{color};
+            return rybRotate(std::move(hsb), angle);
+        }
 //
 //    static public function Array<Int> { intArray(colors:ColorScheme<Dynamic>)
 //        var a = [];

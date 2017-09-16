@@ -77,6 +77,6 @@ install:
 script:
   - mkdir build
   - cd build
-  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make fi
-  - if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then cmake .. && make fi
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make ; fi
+  - if [[ ${TRAVIS_OS_NAME} == "osx" ]]; then cmake .. && make ; fi
   - ./tests/psychic-color-tests
