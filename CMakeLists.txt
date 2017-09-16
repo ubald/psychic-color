@@ -12,14 +12,34 @@ include(ExternalProject)
 include(FeatureSummary)
 
 set(PSYCHIC_COLOR_SOURCES
+    psychic-color/css_colors.hpp
+    psychic-color/PsychicColor.hpp
     psychic-color/PsychicColor.cpp
+    psychic-color/spaces/Gray.hpp
     psychic-color/spaces/Gray.cpp
+    psychic-color/spaces/Hex.hpp
     psychic-color/spaces/Hex.cpp
+    psychic-color/spaces/RGB.hpp
     psychic-color/spaces/RGB.cpp
+    psychic-color/spaces/ARGB.hpp
     psychic-color/spaces/ARGB.cpp
+    psychic-color/spaces/HSB.hpp
     psychic-color/spaces/HSB.cpp
+    psychic-color/spaces/HSL.hpp
     psychic-color/spaces/HSL.cpp
+    psychic-color/schemes/ColorScheme.hpp
+    psychic-color/schemes/ColorWheelScheme.hpp
+    psychic-color/schemes/Analogous.hpp
+    psychic-color/schemes/Complementary.hpp
+    psychic-color/schemes/Compound.hpp
+    psychic-color/schemes/FlippedCompound.hpp
+    psychic-color/schemes/Monochrome.hpp
+    psychic-color/schemes/SplitComplementary.hpp
+    psychic-color/schemes/Tetrad.hpp
+    psychic-color/schemes/Triad.hpp
+
 )
+
 
 add_library(psychic-color STATIC
     ${PSYCHIC_COLOR_SOURCES}

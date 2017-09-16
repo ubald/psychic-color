@@ -129,7 +129,7 @@ namespace psychic_color {
     }
 
     unsigned int HSL::getColor() const {
-        RGB rgb = *this;
+        RGB rgb{*this};
         return rgb.getColor();
     }
 

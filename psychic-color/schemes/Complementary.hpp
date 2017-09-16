@@ -51,12 +51,12 @@ namespace psychic_color {
         supportingComplement.setBrightness(0.3f + complement.getBrightness());
         supportingComplement.setSaturation(0.1f + complement.getSaturation() * 0.3f);
 
-        this->_colors[0] = std::move(primary);
-        this->_colors[1] = std::move(contrasting);
-        this->_colors[2] = std::move(supporting);
-        this->_colors[3] = std::move(complement);
-        this->_colors[4] = std::move(contrastingComplement);
-        this->_colors[5] = std::move(supportingComplement);
+        this->_colors[0] = std::move(static_cast<T>(primary));
+        this->_colors[1] = std::move(static_cast<T>(contrasting));
+        this->_colors[2] = std::move(static_cast<T>(supporting));
+        this->_colors[3] = std::move(static_cast<T>(complement));
+        this->_colors[4] = std::move(static_cast<T>(contrastingComplement));
+        this->_colors[5] = std::move(static_cast<T>(supportingComplement));
     }
 
 }

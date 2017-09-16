@@ -77,7 +77,7 @@ namespace psychic_color {
             newHSB.setSaturation(newHSB.getSaturation() - 0.05f);
             this->_colors[i + 1] = std::move(newHSB);
         }
-        this->_colors[0] = std::move(primaryHSB);
+        this->_colors[0] = std::move(static_cast<T>(primaryHSB));
     }
 
 }
