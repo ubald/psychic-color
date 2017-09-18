@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-#include <lib/psychic-color/psychic-color/PsychicColor.hpp>
+#include "psychic-color/PsychicColor.hpp"
 #include "ColorScheme.hpp"
 
 namespace psychic_color {
@@ -11,21 +11,22 @@ namespace psychic_color {
     public:
         explicit ColorWheelScheme(const T &primaryColor, bool ryb = false);
     protected:
-        std::function<T(HSB, float)> rotate{};
-
+        HSB rotate(HSB color, float angle);
+        bool _ryb{false};
         inline static constexpr float wrap(float x, float min, float threshold, float plus);
     };
 
     template<class T, std::size_t N>
     ColorWheelScheme<T, N>::ColorWheelScheme(const T &primaryColor, bool ryb):
-        ColorScheme<T, N>(primaryColor) {
-        if (ryb) {
-            rotate = PsychicColor::rybRotate<T>;
+        ColorScheme<T, N>(primaryColor), _ryb(ryb) {}
+
+    template<class T, std::size_t N>
+    HSB ColorWheelScheme<T, N>::rotate(HSB color, float angle) {
+        if (_ryb) {
+            return PsychicColor::rybRotate(color, angle);
         } else {
-            rotate = [](auto color, float angle) {
-                color.shiftHueAngle(angle);
-                return color;
-            };
+            color.shiftHueAngle(angle);
+            return color;
         }
     }
 

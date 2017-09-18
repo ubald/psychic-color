@@ -9,6 +9,17 @@ TEST_CASE("Complementary") {
 
     float eps = 0.5f / 255.0f;
 
+    SECTION("RGB RYB Red -> RGB") {
+        RGB                rgb{1.0f, 0.0f, 0.0f};
+        Complementary<RGB> c{rgb, true};
+
+        REQUIRE(c.getColor(0) == RGB(1.0f, 0.0f, 0.0f));
+
+        REQUIRE(c.getColor(3).getRed() == 0.0f);
+        REQUIRE(c.getColor(3).getGreen() == 1.0f);
+        REQUIRE(c.getColor(3).getBlue() == Approx(72.f / 255.f).epsilon(eps));
+    }
+
     SECTION("RGB Red -> RGB") {
         RGB rgb{1.0f, 0.0f, 0.0f};
         Complementary<RGB> c{rgb};
@@ -17,7 +28,7 @@ TEST_CASE("Complementary") {
 
         REQUIRE(c.getColor(3).getRed() == 0.0f);
         REQUIRE(c.getColor(3).getGreen() == 1.0f);
-        REQUIRE(c.getColor(3).getBlue() == Approx(72.f / 255.f).epsilon(eps));
+        REQUIRE(c.getColor(3).getBlue() == 1.0f);
     }
 
 }
