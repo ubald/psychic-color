@@ -3,6 +3,8 @@
 
 namespace psychic_color {
 
+    HSB::HSB() : HSB(0.0f, 0.0f, 0.0f) {}
+
     HSB::HSB(const float hue, const float saturation, const float brightness) :
         Color(),
         _hue(hue), _saturation(saturation), _brightness(brightness) {}
@@ -182,7 +184,8 @@ namespace psychic_color {
     }
 
     unsigned int HSB::getColor() const {
-        return static_cast<RGB>(*this).getColor();
+        RGB rgb{*this};
+        return rgb.getColor();
     }
 
     void HSB::setColor(const unsigned int color) {

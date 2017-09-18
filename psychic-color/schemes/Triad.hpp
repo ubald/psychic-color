@@ -6,52 +6,30 @@
 
 namespace psychic_color {
 
-    constexpr std::size_t numColors = 3;
+    constexpr std::size_t TriadNumColors = 3;
 
     template<class T>
-    class Triad : public ColorWheelScheme<T, numColors> {
+    class Triad : public ColorWheelScheme<T, TriadNumColors> {
     public:
-        explicit Triad(const T &primaryColor, float angle = 120.0f);
-        float getAngle() const;
-        void setAngle(float angle);
-    protected:
-        float _angle{120.0f};
-
+        explicit Triad(const T &primaryColor, bool ryb = false);
         void generate() override;
     };
 
     template<class T>
-    Triad<T>::Triad(const T &primaryColor, const float angle):
-        ColorWheelScheme<T, numColors>(primaryColor), _angle{angle} {
+    Triad<T>::Triad(const T &primaryColor, bool ryb):
+        ColorWheelScheme<T, TriadNumColors>(primaryColor, ryb) {
         generate();
-    }
-
-    template<class T>
-    float Triad<T>::getAngle() const {
-        return _angle;
-    }
-
-    template<class T>
-    void Triad<T>::setAngle(const float angle) {
-        if (angle != _angle) {
-            _angle = angle;
-            generate();
-        }
     }
 
     template<class T>
     void Triad<T>::generate() {
         HSB primary{this->_primaryColor};
+        HSB c1{this->rotate(primary, 120.0f)};
+        HSB c2{this->rotate(primary, 240.0f)};
 
-        HSB c1{PsychicColor::rybRotate(primary, _angle)};
-        c1.brighten(0.1f);
-
-        HSB c2{PsychicColor::rybRotate(primary, -_angle)};
-        c2.brighten(0.1f);
-
-        _colors[0] = std::move(static_cast<T>(primary));
-        _colors[1] = std::move(static_cast<T>(c1));
-        _colors[2] = std::move(static_cast<T>(c2));
+        this->_colors[0] = std::move(static_cast<T>(primary));
+        this->_colors[1] = std::move(static_cast<T>(c1));
+        this->_colors[2] = std::move(static_cast<T>(c2));
     }
 
 }

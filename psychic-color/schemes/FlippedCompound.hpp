@@ -6,19 +6,19 @@
 
 namespace psychic_color {
 
-    constexpr std::size_t numColors = 6;
+    constexpr std::size_t FlippedCompoundNumColors = 6;
 
     template<class T>
-    class FlippedCompound : public ColorWheelScheme<T, numColors> {
+    class FlippedCompound : public ColorWheelScheme<T, FlippedCompoundNumColors> {
     public:
-        explicit FlippedCompound(const T &primaryColor);
-    protected:
+        explicit FlippedCompound(const T &primaryColor, bool ryb = false);
         void generate() override;
+    protected:
     };
 
     template<class T>
-    FlippedCompound<T>::FlippedCompound(const T &primaryColor):
-        ColorWheelScheme<T, numColors>(primaryColor) {
+    FlippedCompound<T>::FlippedCompound(const T &primaryColor, bool ryb ):
+        ColorWheelScheme<T, FlippedCompoundNumColors>(primaryColor, ryb) {
         generate();
     }
 
@@ -26,30 +26,30 @@ namespace psychic_color {
     void FlippedCompound<T>::generate() {
         HSB primary{this->_primaryColor};
 
-        HSB c1{PsychicColor::rybRotate(primary, -30.0f)};
-        c1.setBrightness(wrap(primary.getBrightness(), 0.25f, 0.60f, 0.25f));
+        HSB c1{this->rotate(primary, -30.0f)};
+        c1.setBrightness(this->wrap(primary.getBrightness(), 0.25f, 0.60f, 0.25f));
 
-        HSB c2{PsychicColor::rybRotate(primary, -30.0f)};
-        c2.setBrightness(wrap(primary.getBrightness(), 0.40f, 0.10f, 0.40f));
-        c2.setSaturation(wrap(primary.getSaturation(), 0.40f, 0.20f, 0.40f));
+        HSB c2{this->rotate(primary, -30.0f)};
+        c2.setBrightness(this->wrap(primary.getBrightness(), 0.40f, 0.10f, 0.40f));
+        c2.setSaturation(this->wrap(primary.getSaturation(), 0.40f, 0.20f, 0.40f));
 
-        HSB c3{PsychicColor::rybRotate(primary, -160.0f)};
-        c3.setBrightness(wrap(primary.getBrightness(), 0.25f, 0.10f, 0.25f));
+        HSB c3{this->rotate(primary, -160.0f)};
+        c3.setBrightness(this->wrap(primary.getBrightness(), 0.25f, 0.10f, 0.25f));
 
-        HSB c4{PsychicColor::rybRotate(primary, -150.0f)};
-        c4.setBrightness(wrap(primary.getBrightness(), 0.30f, 0.60f, 0.30f));
-        c4.setSaturation(wrap(primary.getSaturation(), 0.10f, 0.80f, 0.10f));
+        HSB c4{this->rotate(primary, -150.0f)};
+        c4.setBrightness(this->wrap(primary.getBrightness(), 0.30f, 0.60f, 0.30f));
+        c4.setSaturation(this->wrap(primary.getSaturation(), 0.10f, 0.80f, 0.10f));
 
-        HSB c5{PsychicColor::rybRotate(primary, -150.0f)};
-        c5.setBrightness(wrap(primary.getBrightness(), 0.40f, 0.20f, 0.40f));
-        c5.setSaturation(wrap(primary.getSaturation(), 0.10f, 0.80f, 0.10f));
+        HSB c5{this->rotate(primary, -150.0f)};
+        c5.setBrightness(this->wrap(primary.getBrightness(), 0.40f, 0.20f, 0.40f));
+        c5.setSaturation(this->wrap(primary.getSaturation(), 0.10f, 0.80f, 0.10f));
 
-        _colors[0] = std::move(static_cast<T>(primary));
-        _colors[1] = std::move(static_cast<T>(c1));
-        _colors[2] = std::move(static_cast<T>(c2));
-        _colors[3] = std::move(static_cast<T>(c3));
-        _colors[4] = std::move(static_cast<T>(c4));
-        _colors[5] = std::move(static_cast<T>(c5));
+        this->_colors[0] = std::move(static_cast<T>(primary));
+        this->_colors[1] = std::move(static_cast<T>(c1));
+        this->_colors[2] = std::move(static_cast<T>(c2));
+        this->_colors[3] = std::move(static_cast<T>(c3));
+        this->_colors[4] = std::move(static_cast<T>(c4));
+        this->_colors[5] = std::move(static_cast<T>(c5));
     }
 
 }

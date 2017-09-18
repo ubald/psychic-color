@@ -6,28 +6,29 @@
 
 namespace psychic_color {
 
-    constexpr std::size_t numColors = 5;
+    constexpr std::size_t AnalogousNumColors = 5;
 
     template<class T>
-    class Analogous : public ColorWheelScheme<T, numColors> {
+    class Analogous : public ColorWheelScheme<T, AnalogousNumColors> {
     public:
-        explicit Analogous(const T &primaryColor, float angle = 10.0f, float contrast = 0.25f);
+        explicit Analogous(const T &primaryColor, float angle = 10.0f, float contrast = 0.25f, bool ryb = false);
+        explicit Analogous(const T &primaryColor, bool ryb);
         float getAngle() const;
         void setAngle(float angle);
-        float getContrast() const;
-        void setContrast(float contrast);
+        void generate() override;
     protected:
         float _angle{10.0f};
-        float _contrast{25.0f};
-
-        void generate() override;
     };
 
     template<class T>
-    Analogous<T>::Analogous(const T &primaryColor, const float angle, const float contrast):
-        ColorWheelScheme<T, numColors>(primaryColor), _angle{angle}, _contrast{contrast} {
+    Analogous<T>::Analogous(const T &primaryColor, const float angle, const float contrast, bool ryb):
+        ColorWheelScheme<T, AnalogousNumColors>(primaryColor, ryb), _angle{angle} {
         generate();
     }
+
+    template<class T>
+    Analogous<T>::Analogous(const T &primaryColor, bool ryb):
+        Analogous<T>(primaryColor, 10.0f, 0.25f, ryb) {}
 
     template<class T>
     float Analogous<T>::getAngle() const {
@@ -43,41 +44,19 @@ namespace psychic_color {
     }
 
     template<class T>
-    float Analogous<T>::getContrast() const {
-        return _contrast;
-    }
-
-    template<class T>
-    void Analogous<T>::setContrast(const float contrast) {
-        if (contrast != _contrast) {
-            _contrast = contrast;
-            generate();
-        }
-    }
-
-    template<class T>
     void Analogous<T>::generate() {
-        HSB       primaryHSB{this->_primaryColor};
-        float     array[4][2] = {
-            {1.0f,  2.2f},
-            {2.0f,  1.0f},
-            {-1.0f, -0.5f},
-            {-2.0f, 1.0f}
-        };
-        for (unsigned int i = 0; i < 4; ++i) {
-            float one = array[i][0];
-            float two = array[i][1];
-            float t   = 0.44f - two * 0.1f;
-            HSB newHSB{PsychicColor::rybRotate(primaryHSB, _angle * one)};
-            if (primaryHSB.getBrightness() - _contrast * two < t) {
-                newHSB.setBrightness(t);
-            } else {
-                newHSB.setBrightness(primaryHSB.getBrightness() - _contrast * two);
-            }
-            newHSB.setSaturation(newHSB.getSaturation() - 0.05f);
-            this->_colors[i + 1] = std::move(newHSB);
-        }
-        this->_colors[0] = std::move(static_cast<T>(primaryHSB));
+        HSB primary{this->_primaryColor};
+
+        HSB c1{this->rotate(primary, _angle * -2.0f)};
+        HSB c2{this->rotate(primary, _angle * -1.0f)};
+        HSB c3{this->rotate(primary, _angle * 1.0f)};
+        HSB c4{this->rotate(primary, _angle * 2.0f)};
+
+        this->_colors[0] = std::move(static_cast<T>(c1));
+        this->_colors[1] = std::move(static_cast<T>(c2));
+        this->_colors[2] = std::move(static_cast<T>(primary));
+        this->_colors[3] = std::move(static_cast<T>(c3));
+        this->_colors[4] = std::move(static_cast<T>(c4));
     }
 
 }

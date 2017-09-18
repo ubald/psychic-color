@@ -1,46 +1,32 @@
 #pragma once
 
 #include <array>
+#include <lib/psychic-color/psychic-color/PsychicColor.hpp>
 #include "ColorScheme.hpp"
 
 namespace psychic_color {
 
     template<class T, std::size_t N>
-    class ColorWheelScheme : public ColorScheme<T> {
+    class ColorWheelScheme : public ColorScheme<T, N> {
     public:
-        explicit ColorWheelScheme(const T &primaryColor);
-
-        //T &getPrimaryColor() const;
-        //void setPrimaryColor(const T &primaryColor);
-        T getColor(unsigned int index) const;
+        explicit ColorWheelScheme(const T &primaryColor, bool ryb = false);
     protected:
-        const T                &_primaryColor;
-        std::array<T, N> _colors;
-        virtual void generate() = 0;
+        std::function<T(HSB, float)> rotate{};
 
         inline static constexpr float wrap(float x, float min, float threshold, float plus);
     };
 
     template<class T, std::size_t N>
-    ColorWheelScheme<T, N>::ColorWheelScheme(const T &primaryColor):
-        ColorScheme<T>(), _primaryColor{primaryColor} {}
-
-    //template<class T, std::size_t N>
-    //T &ColorWheelScheme<T, N>::getPrimaryColor() const {
-    //    return _primaryColor;
-    //}
-    //
-    //template<class T, std::size_t N>
-    //void ColorWheelScheme<T, N>::setPrimaryColor(const T &primaryColor) {
-    //    if (primaryColor != _primaryColor) {
-    //        //_primaryColor = primaryColor;
-    //        generate();
-    //    }
-    //}
-
-    template<class T, std::size_t N>
-    T ColorWheelScheme<T, N>::getColor(const unsigned int index) const {
-        return _colors[index];
+    ColorWheelScheme<T, N>::ColorWheelScheme(const T &primaryColor, bool ryb):
+        ColorScheme<T, N>(primaryColor) {
+        if (ryb) {
+            rotate = PsychicColor::rybRotate<T>;
+        } else {
+            rotate = [](auto color, float angle) {
+                color.shiftHueAngle(angle);
+                return color;
+            };
+        }
     }
 
     template<class T, std::size_t N>

@@ -10,7 +10,8 @@ namespace psychic_color {
     public:
         inline static float hue2rgb(float p, float q, float t);
 
-        explicit HSL(float hue = 0.0f, float saturation = 0.0f, float lightness = 0.0f);
+        HSL();
+        HSL(float hue, float saturation, float lightness);
         HSL(const HSL &hsl);
         explicit HSL(const RGB &rgb);
         explicit HSL(unsigned int color);

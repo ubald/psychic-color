@@ -6,19 +6,20 @@
 
 namespace psychic_color {
 
-    constexpr std::size_t numColors = 6;
+    constexpr std::size_t ComplementaryNumColors = 6;
 
     template<class T>
-    class Complementary : public ColorWheelScheme<T, numColors> {
+    class Complementary : public ColorWheelScheme<T, ComplementaryNumColors> {
     public:
-        explicit Complementary(const T &primaryColor);
-    protected:
+        Complementary() = delete;
+        explicit Complementary(const T &primaryColor, bool ryb = false);
         void generate() override;
+    protected:
     };
 
     template<class T>
-    Complementary<T>::Complementary(const T &primaryColor):
-        ColorWheelScheme<T, numColors>(primaryColor) {
+    Complementary<T>::Complementary(const T &primaryColor, bool ryb):
+        ColorWheelScheme<T, ComplementaryNumColors>(primaryColor, ryb) {
         generate();
     }
 
@@ -39,7 +40,7 @@ namespace psychic_color {
         supporting.setSaturation(0.1f + primary.getSaturation() * 0.3f);
 
         // COMPLEMENT
-        HSB complement{PsychicColor::rybRotate(primary, 180.0f)};
+        HSB complement{this->rotate(primary, 180.0f)};
 
         HSB contrastingComplement{complement};
         if (complement.getBrightness() > 0.3f) {

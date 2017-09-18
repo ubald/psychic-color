@@ -8,7 +8,8 @@ namespace psychic_color {
 
     class HSB : public Color {
     public:
-        explicit HSB(float hue = 0.0f, float saturation = 0.0f, float brightness = 0.0f);
+        HSB();
+        HSB(float hue, float saturation, float brightness);
         HSB(const HSB &hsb);
         explicit HSB(const RGB &rgb);
         explicit HSB(unsigned int color);
