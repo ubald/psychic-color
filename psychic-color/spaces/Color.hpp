@@ -18,8 +18,8 @@ namespace psychic_color {
         virtual unsigned int getColor() const = 0;
         virtual void setColor(unsigned int color) = 0;
 
-        unsigned int getColorAlpha() const {
-            return 0xFF000000 | (getColor() & 0xffffff);
+        unsigned int getColorAlpha(const unsigned int alpha = 0xff) const {
+            return (alpha << 24) | (getColor() & 0xffffff);
         }
 
         //virtual Color interpolate( Color &target, const float ratio = 0.5f) const = 0;
