@@ -11,7 +11,7 @@ namespace psychic_color {
     template<class T>
     class Analogous : public ColorWheelScheme<T, AnalogousNumColors> {
     public:
-        explicit Analogous(const T &primaryColor, float angle = 10.0f, float contrast = 0.25f, bool ryb = false);
+        explicit Analogous(const T &primaryColor, float angle = 10.0f, bool ryb = false);
         explicit Analogous(const T &primaryColor, bool ryb);
         float getAngle() const;
         void setAngle(float angle);
@@ -21,14 +21,14 @@ namespace psychic_color {
     };
 
     template<class T>
-    Analogous<T>::Analogous(const T &primaryColor, const float angle, const float contrast, bool ryb):
+    Analogous<T>::Analogous(const T &primaryColor, const float angle, bool ryb):
         ColorWheelScheme<T, AnalogousNumColors>(primaryColor, ryb), _angle{angle} {
         generate();
     }
 
     template<class T>
     Analogous<T>::Analogous(const T &primaryColor, bool ryb):
-        Analogous<T>(primaryColor, 10.0f, 0.25f, ryb) {}
+        Analogous<T>(primaryColor, 10.0f, ryb) {}
 
     template<class T>
     float Analogous<T>::getAngle() const {

@@ -7,7 +7,7 @@ namespace psychic_color {
 
     class RGB : public Color {
     public:
-        explicit RGB(const float red = 0.0f, const float green = 0.0f, const float blue = 0.0f);
+        explicit RGB(float red = 0.0f, float green = 0.0f, float blue = 0.0f);
         RGB(const RGB &rgb);
         RGB(unsigned int color);
 
