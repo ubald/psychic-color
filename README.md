@@ -2,8 +2,6 @@
 
 # Psychic Color
 
-[![Build Status](https://travis-ci.org/ubald/psychic-color.svg?branch=master)](https://travis-ci.org/ubald/psychic-color)
-
 A C++ library for color conversion and color scheme generation. 
 
 It is based on [hxColorToolkit](https://github.com/andyli/hxColorToolkit) 
@@ -16,8 +14,45 @@ sources available as much as possible for all of the project's parts in the form
 
 ## Usage
 
-Clone as a submodule and either use `add_subdirectory` in CMake and then add `${PSYCHIC_UI_INCLUDE_DIRS}` to your include
-directories, or just copy the headers and source to your project and include them however you want.
+The library needs a C++17 compiler and CMake 3.24 or newer. Either add it to your CMake build and link the
+`psychic-color::psychic-color` target, which brings the include directory and the C++17 requirement along with it,
+or just copy the headers and sources to your project and include them however you want.
+
+As a submodule:
+
+```cmake
+add_subdirectory(lib/psychic-color)
+target_link_libraries(my-target PRIVATE psychic-color::psychic-color)
+```
+
+Or with FetchContent:
+
+```cmake
+include(FetchContent)
+FetchContent_Declare(psychic-color
+    GIT_REPOSITORY https://github.com/ubald/psychic-color.git
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(psychic-color)
+target_link_libraries(my-target PRIVATE psychic-color::psychic-color)
+```
+
+Headers are included from the repository root, e.g. `#include <psychic-color/spaces/HSL.hpp>`. The library is
+static unless `BUILD_SHARED_LIBS` is on, and is compiled as position-independent code so it can go into a shared library.
+When included from another project, the tests and the warning flags stay off unless you turn on
+`PSYCHIC_COLOR_BUILD_TESTS` or `PSYCHIC_COLOR_WARNINGS`.
+
+## Building and testing
+
+```sh
+cmake -B build
+cmake --build build -j"$(nproc)"
+ctest --test-dir build
+```
+
+The tests use [Catch2](https://github.com/catchorg/Catch2) v3. An installed Catch2 3.x is used if CMake can find it,
+otherwise v3.16.1 is downloaded at configure time (pass `-DCMAKE_DISABLE_FIND_PACKAGE_Catch2=ON` to always download it).
+The test executable can also be run directly, as `./build/tests/psychic-color-tests`.
 
 ## Color spaces
 
