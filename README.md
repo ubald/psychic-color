@@ -2,6 +2,8 @@
 
 # Psychic Color
 
+[![CI](https://github.com/ubald/psychic-color/actions/workflows/ci.yml/badge.svg)](https://github.com/ubald/psychic-color/actions/workflows/ci.yml)
+
 A C++ library for color conversion and color scheme generation. 
 
 It is based on [hxColorToolkit](https://github.com/andyli/hxColorToolkit) 

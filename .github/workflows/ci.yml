@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.os }} ${{ matrix.cxx }} C++${{ matrix.std }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        std: [17, 20]
+        os: [ubuntu-latest]
+        cxx: [g++, clang++]
+        include:
+          - { os: macos-latest, cxx: clang++, std: 17 }
+          - { os: macos-latest, cxx: clang++, std: 20 }
+    env:
+      CXX: ${{ matrix.cxx }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure
+        run: cmake -B build -DCMAKE_CXX_STANDARD=${{ matrix.std }} -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
