@@ -1,32 +1,23 @@
-option(PSYCHIC_COLOR_BUILD_TESTS "Build Psychic Color tests?" ON)
-add_feature_info("tests" PSYCHIC_COLOR_BUILD_TESTS "Test Suite")
+include(FetchContent)
+FetchContent_Declare(Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG v3.16.1
+    GIT_SHALLOW TRUE
+    FIND_PACKAGE_ARGS 3
+)
+FetchContent_MakeAvailable(Catch2)
 
-if (PSYCHIC_COLOR_BUILD_TESTS)
+add_executable(psychic-color-tests
+    psychic_color.cpp
+    spaces/gray.cpp
+    spaces/rgb.cpp
+    spaces/argb.cpp
+    spaces/hex.cpp
+    spaces/hsb.cpp
+    spaces/hsl.cpp
+    schemes/complementary.cpp
+)
+target_link_libraries(psychic-color-tests PRIVATE psychic-color::psychic-color Catch2::Catch2WithMain)
+psychic_color_warnings(psychic-color-tests)
 
-    if (NOT TARGET catch)
-        ExternalProject_Add(catch
-            GIT_REPOSITORY https://github.com/philsquared/Catch.git
-            GIT_TAG master
-            PREFIX "${CMAKE_BINARY_DIR}/catch"
-            CMAKE_ARGS "-DNO_SELFTEST=YES"
-            INSTALL_COMMAND ""
-            )
-
-        set(CATCH_INCLUDE_DIRS ${CMAKE_BINARY_DIR}/catch/src/catch/single_include CACHE INTERNAL "Global catch include")
-    endif()
-
-    add_executable(psychic-color-tests
-        main.cpp
-        spaces/gray.cpp
-        spaces/rgb.cpp
-        spaces/argb.cpp
-        spaces/hex.cpp
-        spaces/hsb.cpp
-        spaces/hsl.cpp
-        schemes/complementary.cpp psychic_color.cpp)
-    target_include_directories(psychic-color-tests PUBLIC ${CATCH_INCLUDE_DIRS} ${PSYCHIC_COLOR_INCLUDE_DIRS})
-    target_link_libraries(psychic-color-tests psychic-color)
-
-    add_dependencies(psychic-color-tests psychic-color)
-    add_dependencies(psychic-color-tests catch)
-endif()
+add_test(NAME psychic-color-tests COMMAND psychic-color-tests)

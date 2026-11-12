@@ -1,7 +1,10 @@
 #include <cmath>
-#include "catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <psychic-color/spaces/ARGB.hpp>
 #include <iostream>
+
+using Catch::Approx;
 
 using namespace psychic_color;
 
@@ -45,10 +48,10 @@ TEST_CASE("ARGB") {
                           | (static_cast<unsigned int>(std::round(0.3f * 255.0f)) << 8)
                           | static_cast<unsigned int>(std::round(0.4f * 255.0f))
                       ));
-        REQUIRE(argb.getAlpha() == Approx(0.1f).epsilon(0.5f / 255.0f));
-        REQUIRE(argb.getRed() == Approx(0.2f).epsilon(0.5f / 255.0f));
-        REQUIRE(argb.getGreen() == Approx(0.3f).epsilon(0.5f / 255.0f));
-        REQUIRE(argb.getBlue() == Approx(0.4f).epsilon(0.5f / 255.0f));
+        REQUIRE(argb.getAlpha() == Approx(0.1f).margin(0.5f / 255.0f));
+        REQUIRE(argb.getRed() == Approx(0.2f).margin(0.5f / 255.0f));
+        REQUIRE(argb.getGreen() == Approx(0.3f).margin(0.5f / 255.0f));
+        REQUIRE(argb.getBlue() == Approx(0.4f).margin(0.5f / 255.0f));
     }
 
     SECTION("create from another ARGB") {

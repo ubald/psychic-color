@@ -1,8 +1,11 @@
 #include <cmath>
-#include "catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <psychic-color/spaces/RGB.hpp>
 #include <psychic-color/spaces/HSL.hpp>
 #include <iostream>
+
+using Catch::Approx;
 
 using namespace psychic_color;
 
@@ -99,7 +102,7 @@ TEST_CASE("HSL") {
                 RGB rgb{static_cast<RGB>(hsl)};
                 REQUIRE(rgb.getRed() == 1.0f);
                 REQUIRE(rgb.getGreen() == 0.0f);
-                REQUIRE(rgb.getBlue() == Approx(0.0f)); // I don't know why this one needs approximation
+                REQUIRE(rgb.getBlue() == Approx(0.0f).margin(1e-6f)); // hue2rgb(p, q, -1/3) leaves float rounding error
             }
 
             SECTION("green") {

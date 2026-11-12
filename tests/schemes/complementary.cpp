@@ -1,7 +1,10 @@
 #include <cmath>
 #include <iostream>
-#include "catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <psychic-color/schemes/Complementary.hpp>
+
+using Catch::Approx;
 
 using namespace psychic_color;
 
@@ -17,7 +20,7 @@ TEST_CASE("Complementary") {
 
         REQUIRE(c.getColor(3).getRed() == 0.0f);
         REQUIRE(c.getColor(3).getGreen() == 1.0f);
-        REQUIRE(c.getColor(3).getBlue() == Approx(72.f / 255.f).epsilon(eps));
+        REQUIRE(c.getColor(3).getBlue() == Approx(72.f / 255.f).margin(eps));
     }
 
     SECTION("RGB Red -> RGB") {

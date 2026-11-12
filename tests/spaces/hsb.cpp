@@ -1,5 +1,5 @@
 #include <cmath>
-#include "catch.hpp"
+#include <catch2/catch_test_macros.hpp>
 #include <psychic-color/spaces/RGB.hpp>
 #include <psychic-color/spaces/HSB.hpp>
 #include <iostream>

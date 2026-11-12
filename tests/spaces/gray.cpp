@@ -1,7 +1,10 @@
 #include <cmath>
-#include "catch.hpp"
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <psychic-color/spaces/Gray.hpp>
 #include <iostream>
+
+using Catch::Approx;
 
 using namespace psychic_color;
 
@@ -30,7 +33,7 @@ TEST_CASE("Gray") {
         gray.setColor(((static_cast<unsigned int>(std::round(0.1f * 255.0f)) << 16)
                        | (static_cast<unsigned int>(std::round(0.2f * 255.0f)) << 8)
                        | static_cast<unsigned int>(std::round(0.3f * 255.0f))));
-        REQUIRE(gray.getGray() == Approx(0.3f * 0.1f + 0.59f * 0.2f + 0.11f * 0.3f).epsilon(0.5f / 255.0f));
+        REQUIRE(gray.getGray() == Approx(0.3f * 0.1f + 0.59f * 0.2f + 0.11f * 0.3f).margin(0.5f / 255.0f));
     }
 
     SECTION("create from another Gray") {
