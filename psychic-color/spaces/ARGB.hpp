@@ -9,10 +9,19 @@ namespace psychic_color {
     public:
         explicit ARGB(float alpha = 0.0f, float red = 0.0f, float green = 0.0f, float blue = 0.0f);
         ARGB(const ARGB &argb);
+        ARGB &operator=(const ARGB &argb) = default;
         explicit ARGB(const RGB &rgb);
         explicit ARGB(unsigned int color);
 
+        // Overrides Color::operator RGB(), which is only reached through a Color reference.
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-conversion"
+#endif
         explicit operator RGB() const override;
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
         float getAlpha() const;
         void setAlpha(float alpha);

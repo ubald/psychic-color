@@ -11,6 +11,7 @@ namespace psychic_color {
         inline static float rgbToGray(float red, float green, float blue);
         explicit Gray(float gray = 0.0f);
         Gray(const Gray &gray);
+        Gray &operator=(const Gray &gray) = default;
         explicit Gray(const RGB &rgb);
         explicit Gray(unsigned int color);
 

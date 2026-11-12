@@ -11,6 +11,7 @@ namespace psychic_color {
         HSB();
         HSB(float hue, float saturation, float brightness);
         HSB(const HSB &hsb);
+        HSB &operator=(const HSB &hsb) = default;
         explicit HSB(const RGB &rgb);
         explicit HSB(unsigned int color);
 

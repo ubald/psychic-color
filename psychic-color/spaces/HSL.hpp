@@ -13,6 +13,7 @@ namespace psychic_color {
         HSL();
         HSL(float hue, float saturation, float lightness);
         HSL(const HSL &hsl);
+        HSL &operator=(const HSL &hsl) = default;
         explicit HSL(const RGB &rgb);
         explicit HSL(unsigned int color);
 

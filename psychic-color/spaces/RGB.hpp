@@ -9,9 +9,18 @@ namespace psychic_color {
     public:
         explicit RGB(float red = 0.0f, float green = 0.0f, float blue = 0.0f);
         RGB(const RGB &rgb);
+        RGB &operator=(const RGB &rgb) = default;
         RGB(unsigned int color);
 
+        // Overrides Color::operator RGB(), which is only reached through a Color reference.
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-conversion"
+#endif
         explicit operator RGB() const override;
+#if defined(__GNUC__) && !defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
 
         float getRed() const;
         void setRed(float red);

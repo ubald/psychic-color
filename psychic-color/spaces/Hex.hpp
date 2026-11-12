@@ -10,6 +10,7 @@ namespace psychic_color {
     public:
         explicit Hex(unsigned int color = 0);
         Hex(const Hex &hex);
+        Hex &operator=(const Hex &hex) = default;
 
         explicit operator RGB() const override;
 
